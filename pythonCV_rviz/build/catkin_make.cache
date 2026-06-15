@@ -1,0 +1,2 @@
+rviz_image_project
+-DCATKIN_DEVEL_PREFIX=/home/didi/Desktop/ROS_noetic_project/pythonCV_rviz/devel -DCMAKE_INSTALL_PREFIX=/home/didi/Desktop/ROS_noetic_project/pythonCV_rviz/install -G Unix Makefiles

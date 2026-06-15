@@ -1,0 +1,25 @@
+<launch>
+
+  <!-- Charger l'URDF -->
+  <param name="robot_description"
+         command="$(find xacro)/xacro $(find tf_circle)/urdf/square.urdf" />
+
+  <!-- Publie l'URDF vers TF -->
+  <node name="robot_state_publisher"
+        pkg="robot_state_publisher"
+        type="robot_state_publisher" />
+
+  <!-- Ton node TF -->
+  <node name="circle_tf_publisher"
+        pkg="tf_circle"
+        type="circle_tf_publisher.py"
+        output="screen" />
+
+  <!-- RViz -->
+  <node name="rviz"
+        pkg="rviz"
+        type="rviz"
+        args="-d $(find tf_circle)/launch/view.rviz"
+        required="false" />
+
+</launch>

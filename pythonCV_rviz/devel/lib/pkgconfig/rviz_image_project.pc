@@ -1,0 +1,8 @@
+prefix=/home/didi/Desktop/ROS_noetic_project/pythonCV_rviz/devel
+
+Name: rviz_image_project
+Description: Description of rviz_image_project
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

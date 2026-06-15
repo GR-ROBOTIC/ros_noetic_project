@@ -1,0 +1,2 @@
+tf_slider_demo
+-DCATKIN_DEVEL_PREFIX=/home/didi/Desktop/ROS_noetic_project/python_slide_tf/devel -DCMAKE_INSTALL_PREFIX=/home/didi/Desktop/ROS_noetic_project/python_slide_tf/install -G Unix Makefiles

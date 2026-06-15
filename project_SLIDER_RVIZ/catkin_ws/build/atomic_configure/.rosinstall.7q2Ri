@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/didi/Desktop/ROS_noetic_project/project_SLIDER_RVIZ/catkin_ws/devel/setup.sh

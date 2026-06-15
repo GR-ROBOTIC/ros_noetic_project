@@ -1,0 +1,8 @@
+prefix=/home/didi/Desktop/ROS_noetic_project/project_SLIDER_RVIZ/catkin_ws/devel
+
+Name: ros_robot_arm_python_slider
+Description: Description of ros_robot_arm_python_slider
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

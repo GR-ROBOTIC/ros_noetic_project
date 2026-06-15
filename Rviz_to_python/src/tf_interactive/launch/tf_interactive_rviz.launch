@@ -1,0 +1,11 @@
+<launch>
+  <!-- Node TF interactif -->
+  <node pkg="tf_interactive" type="tf_interactive_node.py" name="tf_interactive_node" output="screen"/>
+
+  <!-- Robot State Publisher pour publier l'URDF -->
+  <param name="robot_description" command="$(find xacro)/xacro $(find tf_interactive)/urdf/tf_boxes.urdf"/>
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+
+  <!-- RViz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find tf_interactive)/launch/tf_interactive.rviz"/>
+</launch>

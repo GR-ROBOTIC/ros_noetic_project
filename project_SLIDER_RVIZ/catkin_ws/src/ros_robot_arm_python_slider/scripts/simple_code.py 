@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+import rospy
+from sensor_msgs.msg import JointState
+import tkinter as tk
+
+class JointSlider:
+    def __init__(self, root, name, min_val=0, max_val=180):
+        self.name = name
+        self.value = 0
+
+        frame = tk.Frame(root)
+        frame.pack()
+
+        tk.Label(frame, text=name).pack()
+        self.slider = tk.Scale(
+            frame,
+            from_=min_val,
+            to=max_val,
+            orient=tk.HORIZONTAL,
+            length=300,
+            command=self.update_value
+        )
+        self.slider.pack()
+
+    def update_value(self, val):
+        self.value = float(val)
+
+class RobotArmController:
+    def __init__(self):
+        rospy.init_node("robot_arm_slider_controller")
+        self.pub = rospy.Publisher("/joint_states", JointState, queue_size=10)
+        self.root = tk.Tk()
+        self.root.title("Robot Arm Slider Controller")
+
+        # Crée les sliders pour chaque joint
+        self.sliders = []
+        self.sliders.append(JointSlider(self.root, "base_joint"))
+        self.sliders.append(JointSlider(self.root, "A1_joint"))
+        self.sliders.append(JointSlider(self.root, "A2_joint"))
+        self.sliders.append(JointSlider(self.root, "A3_joint"))
+        self.sliders.append(JointSlider(self.root, "A4_joint"))
+
+        self.rate = rospy.Rate(10)
+        self.loop()
+
+    def publish_joint_states(self):
+        msg = JointState()
+        msg.header.stamp = rospy.Time.now()
+        msg.name = [s.name for s in self.sliders]
+        msg.position = [s.value * 3.14159 / 180.0 for s in self.sliders]
+        self.pub.publish(msg)
+
+    def loop(self):
+        while not rospy.is_shutdown():
+            self.root.update()
+            self.publish_joint_states()
+            self.rate.sleep()
+
+if __name__ == "__main__":
+    try:
+        RobotArmController()
+    except rospy.ROSInterruptException:
+        pass
+        

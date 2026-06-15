@@ -1,0 +1,7 @@
+# Test de couleur noire pure
+newmtl color_11909273
+Ka 0.0 0.0 0.0
+Kd 0.0 0.0 0.0
+Ks 0.0 0.0 0.0
+d 1.0
+illum 1

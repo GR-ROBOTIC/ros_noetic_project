@@ -1,0 +1,25 @@
+<launch>
+  <param name="robot_description" textfile="$(find mon_robot_moveit)/urdf/robot.urdf" />
+  <param name="robot_description_semantic" textfile="$(find mon_robot_moveit)/config/robot.srdf" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="false"/>
+  </node>
+
+  <node name="move_group" pkg="moveit_ros_move_group" type="move_group" output="screen">
+    <param name="allow_trajectory_execution" value="true"/>
+    <param name="max_safe_path_cost" value="1"/>
+    <param name="jiggle_fraction" value="0.05" />
+    <param name="planning_scene_monitor/publish_planning_scene" value="true" />
+    <param name="planning_scene_monitor/publish_geometry_updates" value="true" />
+    <param name="planning_scene_monitor/publish_state_updates" value="true" />
+    <param name="planning_scene_monitor/publish_transforms_updates" value="true" />
+  </node>
+
+  <!-- Utilisation du chemin absolu pour forcer l'execution du script -->
+  <node name="mon_script" 
+        pkg="mon_robot_moveit" 
+        type="/home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/src/mon_robot_moveit/scripts/control_robot.py" 
+        output="screen" />
+</launch>

@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<robot name="cube_char">
+
+  <!-- ================= BASE LINK ================= -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.3 0.3 0.3"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.3 0.3 0.3"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="2"/>
+      <inertia ixx="0.02" iyy="0.02" izz="0.02" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+  </link>
+
+  <!-- ================= JOINT REVOLUTE (TOURNER SUR PLACE) ================= -->
+  <link name="rotating_link">
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.3 0.3 0.3"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.3 0.3 0.3"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="2"/>
+      <inertia ixx="0.02" iyy="0.02" izz="0.02" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="rotation_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="rotating_link"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="5" velocity="1"/>
+    <dynamics damping="0.01"/>
+  </joint>
+
+  <!-- ================= JOINT PRISMATIQUE (AVANCE / RECULE DANS LA DIRECTION DU CUBE) ================= -->
+  <link name="moving_link">
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.3 0.3 0.3"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.3 0.3 0.3"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="2"/>
+      <inertia ixx="0.02" iyy="0.02" izz="0.02" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+  </link>
+
+  <joint name="translation_joint" type="prismatic">
+    <parent link="rotating_link"/>
+    <child link="moving_link"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-1.0" upper="1.0" effort="5" velocity="0.5"/>
+    <dynamics damping="0.01"/>
+  </joint>
+
+</robot>

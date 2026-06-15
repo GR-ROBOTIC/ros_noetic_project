@@ -1,0 +1,8 @@
+prefix=/home/didi/Desktop/ROS_noetic_project/python_slide_tf/devel
+
+Name: tf_slider_demo
+Description: Description of tf_slider_demo
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

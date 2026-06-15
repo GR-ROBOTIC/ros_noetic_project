@@ -1,0 +1,2 @@
+robot_control
+-DCATKIN_DEVEL_PREFIX=/home/didi/Desktop/ROS_noetic_project/interactive_marker_arm/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/didi/Desktop/ROS_noetic_project/interactive_marker_arm/catkin_ws/install -G Unix Makefiles

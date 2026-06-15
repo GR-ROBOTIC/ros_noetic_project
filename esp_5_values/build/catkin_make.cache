@@ -1,0 +1,2 @@
+esp32_msgs
+-DCATKIN_DEVEL_PREFIX=/home/didi/Desktop/ROS_noetic_project/esp_5_values/devel -DCMAKE_INSTALL_PREFIX=/home/didi/Desktop/ROS_noetic_project/esp_5_values/install -G Unix Makefiles

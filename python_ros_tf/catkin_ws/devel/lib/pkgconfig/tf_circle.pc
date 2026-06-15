@@ -1,0 +1,8 @@
+prefix=/home/didi/Desktop/ROS_noetic_project/python_ros_tf/catkin_ws/devel
+
+Name: tf_circle
+Description: Description of tf_circle
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

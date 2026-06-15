@@ -1,0 +1,8 @@
+prefix=/home/didi/Desktop/ROS_noetic_project/esp_5_values/devel
+
+Name: esp32_msgs
+Description: Description of esp32_msgs
+Version: 0.0.0
+Cflags: -I/home/didi/Desktop/ROS_noetic_project/esp_5_values/devel/include
+Libs: -L${prefix}/lib 
+Requires: 

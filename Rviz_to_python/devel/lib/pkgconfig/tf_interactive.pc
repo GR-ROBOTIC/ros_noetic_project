@@ -1,0 +1,8 @@
+prefix=/home/didi/Desktop/ROS_noetic_project/Rviz_to_python/devel
+
+Name: tf_interactive
+Description: Description of tf_interactive
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

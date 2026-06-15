@@ -1,0 +1,8 @@
+prefix=/home/didi/Desktop/ROS_noetic_project/_robot_arm-simulation/catkin_ws/devel
+
+Name: robot_draw_project
+Description: Description of robot_draw_project
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

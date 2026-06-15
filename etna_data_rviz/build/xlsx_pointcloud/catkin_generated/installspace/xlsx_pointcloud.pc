@@ -1,0 +1,8 @@
+prefix=/home/didi/Desktop/ROS_noetic_project/etna_data_rviz/install
+
+Name: xlsx_pointcloud
+Description: Description of xlsx_pointcloud
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

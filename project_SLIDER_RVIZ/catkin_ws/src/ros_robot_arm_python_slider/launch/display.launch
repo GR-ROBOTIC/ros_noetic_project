@@ -1,0 +1,13 @@
+<launch>
+  <!-- Charge l'URDF -->
+  <param name="robot_description" textfile="$(find ros_robot_arm_python_slider)/urdf/robot_arm_str.urdf"/>
+
+  <!-- Publie les états des joints -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+  <!-- Publie la TF du robot -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <!-- Lance RViz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ros_robot_arm_python_slider)/config/rviz_config.rviz"/>
+</launch>

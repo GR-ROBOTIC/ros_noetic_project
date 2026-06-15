@@ -1,0 +1,36 @@
+<robot name="moving_square">
+
+  <!-- ROOT LINK VIDE -->
+  <link name="world_root"/>
+
+  <!-- AXE 1 -->
+  <link name="axis_1">
+    <visual>
+      <geometry>
+        <mesh filename="package://tf_circle/meshes/b.obj" scale="1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="axis_1_joint" type="fixed">
+    <parent link="world_root"/>
+    <child link="axis_1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- AXE 2 -->
+  <link name="axis_2">
+    <visual>
+      <geometry>
+        <mesh filename="package://tf_circle/meshes/a.stl" scale="1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="axis_2_joint" type="fixed">
+    <parent link="world_root"/>
+    <child link="axis_2"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+</robot>

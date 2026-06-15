@@ -1,0 +1,14 @@
+<launch>
+
+  <!-- 1. Lancer l'environnement MoveIt (RVIZ, cinématique, etc.) -->
+  <!-- Remplacer "mon_robot_moveit_config" par le nom exact de votre package MoveIt -->
+  <include file="$(find mon_robot_moveit_config)/launch/demo.launch" />
+
+  <!-- 2. Lancer votre script Python de contrôle -->
+  <!-- L'argument output="screen" permet de voir vos "rospy.loginfo" (les angles 0-360°) directement dans la console -->
+  <node name="controle_bras_moveit" 
+        pkg="mon_robot_moveit" 
+        type="controle_robot.py" 
+        output="screen" />
+
+</launch>

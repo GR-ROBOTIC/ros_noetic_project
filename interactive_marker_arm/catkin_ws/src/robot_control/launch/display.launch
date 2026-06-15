@@ -1,0 +1,16 @@
+<launch>
+    <!-- 1. Charger l'URDF sur le serveur de paramètres -->
+    <param name="robot_description" textfile="$(find robot_control)/urdf/robot.urdf" />
+
+    <!-- 2. Lancer le state publisher pour publier la structure du robot -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <!-- 3. Lancer un fake joint state publisher pour pouvoir visualiser le robot sans vrais moteurs pour l'instant -->
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+
+    <!-- 4. Lancer notre script de marqueurs interactifs -->
+    <node name="marker_server" pkg="robot_control" type="marker_server.py" output="screen" />
+
+    <!-- 5. Lancer RViz -->
+    <node name="rviz" pkg="rviz" type="rviz" required="true" />
+</launch>

@@ -1,0 +1,2 @@
+esp32_control:rplidar_ros
+-DCATKIN_DEVEL_PREFIX=/home/didi/Desktop/ROS_noetic_project/project_ESP_TO_ROS_ENCODER/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/didi/Desktop/ROS_noetic_project/project_ESP_TO_ROS_ENCODER/catkin_ws/install -G Unix Makefiles

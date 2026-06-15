@@ -1,0 +1,2 @@
+ros_robot_arm_python_slider
+-DCATKIN_DEVEL_PREFIX=/home/didi/Desktop/ROS_noetic_project/project_SLIDER_RVIZ/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/didi/Desktop/ROS_noetic_project/project_SLIDER_RVIZ/catkin_ws/install -G Unix Makefiles

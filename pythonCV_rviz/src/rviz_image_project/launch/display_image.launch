@@ -1,0 +1,21 @@
+<launch>
+
+    <!-- Webcam -->
+    <node pkg="rviz_image_project"
+          type="webcam_publisher.py"
+          name="webcam_publisher"
+          output="screen" />
+
+    <!-- TF statique : world -> camera_frame -->
+    <node pkg="tf2_ros"
+          type="static_transform_publisher"
+          name="camera_tf"
+          args="0 0 0 0 0 0 world camera_frame" />
+
+    <!-- RViz -->
+    <node pkg="rviz"
+          type="rviz"
+          name="rviz"
+          args="-d $(find rviz_image_project)/rviz/webcam_view.rviz" />
+
+</launch>

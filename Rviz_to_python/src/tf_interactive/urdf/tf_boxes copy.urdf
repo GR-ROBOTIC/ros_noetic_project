@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<robot name="tf_boxes">
+
+  <link name="world"/>
+
+  <!-- Cube TF1 -->
+  <link name="tf1_link">
+    <visual>
+      <geometry>
+        <box size="0.2 0.2 0.2"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="world_to_tf1" type="fixed">
+    <parent link="world"/>
+    <child link="tf1_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+
+
+  <!-- Cube TF2 -->
+  <link name="tf2_link">
+    <visual>
+      <geometry>
+        <box size="0.2 0.2 0.2"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="world_to_tf2" type="continuous">
+    <parent link="world"/>
+    <child link="tf2_link"/>
+    <origin xyz="1 1 0" rpy="0 0 0"/>
+  </joint>
+
+
+
+
+
+  <!-- Cube TF3 -->
+  <link name="tf3_link">
+    <visual>
+      <geometry>
+        <box size="0.2 0.2 0.2"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="world_to_tf3" type="fixed">
+    <parent link="world"/>
+    <child link="tf3_link"/>
+    <origin xyz="0 1 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Cube TF4 -->
+  <link name="tf4_link">
+    <visual>
+      <geometry>
+        <box size="0.2 0.2 0.2"/>
+      </geometry>
+      <material name="yellow">
+        <color rgba="1 1 0 1"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="world_to_tf4" type="fixed">
+    <parent link="world"/>
+    <child link="tf4_link"/>
+    <origin xyz="1 1 0" rpy="0 0 0"/>
+  </joint>
+
+</robot>

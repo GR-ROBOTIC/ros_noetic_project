@@ -1,0 +1,13 @@
+<launch>
+  <!-- Charger URDF -->
+  <param name="robot_description" command="cat $(find tf_slider_demo)/urdf/teste.urdf"/>
+
+  <!-- Lancer robot_state_publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+
+  <!-- Lancer le script des sliders -->
+   <!--  <node pkg="tf_slider_demo" type="slider_tf_pub.py" name="tf_slider_pub" output="screen"/>-->
+
+  <!-- Lancer RViz -->
+  <node pkg="rviz" type="rviz" name="rviz"/>
+</launch>

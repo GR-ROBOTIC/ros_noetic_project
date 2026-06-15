@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: robot_draw_project
+    relative_path: urdf/mon_bras_6axes.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/robot_impression_6axes.srdf
+  CONFIG:
+    author_name: kebe
+    author_email: kebeelhadji271098@gmail.com
+    generated_timestamp: 1781527136

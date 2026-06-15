@@ -1,0 +1,16 @@
+<launch>
+
+  <node pkg="xlsx_pointcloud"
+        type="xlsx_to_pointcloud.py"
+        name="xlsx_pointcloud"
+        output="screen">
+    <param name="file_path"
+           value="$(find xlsx_pointcloud)/data/Temperature_corrected.xlsx"/>
+  </node>
+
+  <node pkg="rviz"
+        type="rviz"
+        name="rviz"
+        required="true"/>
+
+</launch>

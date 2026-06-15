@@ -1,0 +1,348 @@
+#!/usr/bin/env python3
+import rospy
+import math
+import threading
+from interactive_markers.interactive_marker_server import InteractiveMarkerServer
+from interactive_markers.menu_handler import MenuHandler
+from visualization_msgs.msg import InteractiveMarker, InteractiveMarkerControl, Marker
+from sensor_msgs.msg import JointState
+
+class RobotJointController:
+    def __init__(self):
+        rospy.init_node("robot_joint_controller")
+        
+        # Position par défaut des articulations (Angles en radians)
+        self.joint_positions = {
+            "joint1": 0.0,
+            "joint2": 0.0,
+            "joint3": 0.0,
+            "joint4": 0.0,
+            "left_finger_joint": 0.015,
+            "right_finger_joint": 0.015
+        }
+        
+        # Publisher pour mettre à jour la cinématique dans RViz
+        self.joint_pub = rospy.Publisher("/joint_states", JointState, queue_size=10)
+        
+        # Initialisation du serveur d'Interactive Markers
+        self.server = InteractiveMarkerServer("robot_control_marker")
+        self.menu_handler = MenuHandler()
+        
+        # Configuration du menu pour la pince (sera rattaché au joint du poignet)
+        self.menu_handler.insert("Ouvrir la pince", callback=self.open_gripper)
+        self.menu_handler.insert("Fermer la pince", callback=self.close_gripper)
+
+        # Création des marqueurs interactifs pour chaque joint de rotation
+        # Arguments : (nom, frame_parent, x, y, z, axe_de_rotation)
+        # Les coordonnées X, Y, Z correspondent exactement aux origines des joints définies dans l'URDF
+        self.create_revolute_marker("joint1_target", "base_link", 0.0, 0.0, 0.05, "z")
+        self.create_revolute_marker("joint2_target", "link1",     0.0, 0.0, 0.20, "y")
+        self.create_revolute_marker("joint3_target", "link2",     0.0, 0.0, 0.35, "y")
+        self.create_revolute_marker("joint4_target", "link3",     0.0, 0.0, 0.30, "y")
+        
+        self.server.applyChanges()
+        
+        # Thread de publication continue des articulations à 20Hz
+        self.active = True
+        self.pub_thread = threading.Thread(target=self.publish_loop)
+        self.pub_thread.start()
+        
+        rospy.loginfo("Serveur de controle par articulation pret !")
+
+    def create_revolute_marker(self, name, frame, x, y, z, axis):
+        """ Génère un marqueur interactif de rotation propre rattaché à son repère parent """
+        int_marker = InteractiveMarker()
+        int_marker.header.frame_id = frame
+        int_marker.name = name
+        int_marker.description = f"Rotation {name.split('_')[0]}"
+        int_marker.scale = 0.18  # Taille visuelle de l'anneau
+        
+        # Positionnement de l'anneau exactement au niveau du pivot physique
+        int_marker.pose.position.x = x
+        int_marker.pose.position.y = y
+        int_marker.pose.position.z = z
+
+        # Représentation visuelle du pivot (une petite sphère de couleur pour repérer le joint)
+        visual_marker = Marker()
+        visual_marker.type = Marker.SPHERE
+        visual_marker.scale.x = 0.04
+        visual_marker.scale.y = 0.04
+        visual_marker.scale.z = 0.04
+        
+        # Attribution d'une couleur unique par joint pour faciliter l'identification
+        if name == "joint1_target":
+            visual_marker.color.r = 1.0; visual_marker.color.g = 0.0; visual_marker.color.b = 0.0  # Rouge
+        elif name == "joint2_target":
+            visual_marker.color.r = 0.0; visual_marker.color.g = 1.0; visual_marker.color.b = 0.0  # Vert
+        elif name == "joint3_target":
+            visual_marker.color.r = 0.0; visual_marker.color.g = 0.0; visual_marker.color.b = 1.0  # Bleu
+        else:
+            visual_marker.color.r = 1.0; visual_marker.color.g = 0.6; visual_marker.color.b = 0.0  # Orange
+
+        visual_marker.color.a = 0.95
+        
+        visual_control = InteractiveMarkerControl()
+        visual_control.always_visible = True
+        visual_control.markers.append(visual_marker)
+        int_marker.controls.append(visual_control)
+
+        # Contrôleur d'interaction de rotation
+        rotate_control = InteractiveMarkerControl()
+        rotate_control.name = f"rotate_{axis}"
+        rotate_control.interaction_mode = InteractiveMarkerControl.ROTATE_AXIS
+        
+        # ALIGNEMENT NORMALISÉ (Évite l'erreur 'unnormalized quaternions')
+        # Pour une rotation autour d'un axe, nous devons nous assurer que le vecteur d'orientation
+        # a une norme de exactement 1.0. (1/sqrt(2) = 0.70710678)
+        if axis == "z":
+            # Alignement de l'axe X du controleur vers l'axe Z global
+            rotate_control.orientation.w = 0.70710678
+            rotate_control.orientation.x = 0.0
+            rotate_control.orientation.y = 0.70710678
+            rotate_control.orientation.z = 0.0
+        elif axis == "y":
+            # Alignement de l'axe X du controleur vers l'axe Y global
+            rotate_control.orientation.w = 0.70710678
+            rotate_control.orientation.x = 0.0
+            rotate_control.orientation.y = 0.0
+            rotate_control.orientation.z = 0.70710678
+            
+        int_marker.controls.append(rotate_control)
+        
+        # Enregistrement du marqueur
+        self.server.insert(int_marker, self.process_feedback)
+        
+        # On attache le menu contextuel de la pince sur le dernier joint (poignet)
+        if name == "joint4_target":
+            self.menu_handler.apply(self.server, name)
+
+    def process_feedback(self, feedback):
+        """ Appelé lors de la manipulation d'un des marqueurs """
+        if feedback.event_type == feedback.POSE_UPDATE:
+            name = feedback.marker_name
+            q = feedback.pose.orientation
+            
+            # Conversion de la rotation quaternion en angle Euler direct autour de l'axe concerné
+            if name == "joint1_target":
+                # Rotation autour de l'axe Z : theta = 2 * atan2(z, w)
+                theta = 2.0 * math.atan2(q.z, q.w)
+                # Limitation physique de l'articulation de la base [-180° à +180°]
+                self.joint_positions["joint1"] = max(-3.1416, min(3.1416, theta))
+                
+            elif name == "joint2_target":
+                # Rotation autour de l'axe Y : theta = 2 * atan2(y, w)
+                theta = 2.0 * math.atan2(q.y, q.w)
+                # Limitation de l'épaule [-90° à +90°]
+                self.joint_positions["joint2"] = max(-1.5708, min(1.5708, theta))
+                
+            elif name == "joint3_target":
+                # Rotation autour de l'axe Y
+                theta = 2.0 * math.atan2(q.y, q.w)
+                # Limitation du coude [-114° à +114°]
+                self.joint_positions["joint3"] = max(-2.0, min(2.0, theta))
+                
+            elif name == "joint4_target":
+                # Rotation autour de l'axe Y
+                theta = 2.0 * math.atan2(q.y, q.w)
+                # Limitation du poignet [-90° à +90°]
+                self.joint_positions["joint4"] = max(-1.5708, min(1.5708, theta))
+
+    def open_gripper(self, feedback):
+        """ Ouvre la pince """
+        rospy.loginfo("Ouverture de la pince")
+        self.joint_positions["left_finger_joint"] = 0.03
+        self.joint_positions["right_finger_joint"] = 0.03
+
+    def close_gripper(self, feedback):
+        """ Ferme la pince """
+        rospy.loginfo("Fermeture de la pince")
+        self.joint_positions["left_finger_joint"] = 0.0
+        self.joint_positions["right_finger_joint"] = 0.0
+
+    def publish_loop(self):
+        """ Publication continue de l'état des articulations (20Hz) """
+        rate = rospy.Rate(20)
+        while not rospy.is_shutdown() and self.active:
+            msg = JointState()
+            msg.header.stamp = rospy.Time.now()
+            msg.name = list(self.joint_positions.keys())
+            msg.position = list(self.joint_positions.values())
+            self.joint_pub.publish(msg)
+            rate.sleep()
+
+    def shutdown(self):
+        self.active = False
+        self.pub_thread.join()
+
+if __name__ == "__main__":
+    controller = RobotJointController()
+    try:
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass
+    finally:
+        controller.shutdown()
+
+
+# ==============================================================================
+# LE CODE CI-DESSOUS EST LE FICHIER URDF SANS AUCUN COMMENTAIRE !
+# Copiez simplement TOUT le contenu situé entre les trois guillemets """
+# et collez-le directement dans votre fichier : src/robot_control/urdf/robot.urdf
+# ==============================================================================
+URDF_RAW_DATA = """<?xml version="1.0"?>
+<robot name="robot_4axes_gripper">
+
+  <!-- Matériaux pour le design du robot -->
+  <material name="dark_grey"><color rgba="0.2 0.2 0.2 1"/></material>
+  <material name="blue"><color rgba="0.0 0.4 0.8 1"/></material>
+  <material name="orange"><color rgba="1.0 0.5 0.0 1"/></material>
+  <material name="white"><color rgba="0.9 0.9 0.9 1"/></material>
+
+  <!-- ================= BASE LINK ================= -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.1" radius="0.15"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+  </link>
+
+  <!-- Joint 1 : Rotation de la base (Axe Z) -->
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link1"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.1416" upper="3.1416" effort="10.0" velocity="1.0"/>
+  </joint>
+
+  <!-- ================= LINK 1 ================= -->
+  <link name="link1">
+    <visual>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.2" radius="0.06"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <!-- Joint 2 : Épaule (Axe Y) -->
+  <joint name="joint2" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.5708" upper="1.5708" effort="10.0" velocity="1.0"/>
+  </joint>
+
+  <!-- ================= LINK 2 ================= -->
+  <link name="link2">
+    <visual>
+      <origin xyz="0 0 0.175" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.35"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <!-- Joint 3 : Coude (Axe Y) -->
+  <joint name="joint3" type="revolute">
+    <parent link="link2"/>
+    <child link="link3"/>
+    <origin xyz="0 0 0.35" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.0" upper="2.0" effort="10.0" velocity="1.0"/>
+  </joint>
+
+  <!-- ================= LINK 3 ================= -->
+  <link name="link3">
+    <visual>
+      <origin xyz="0 0 0.15" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.04 0.04 0.3"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <!-- Joint 4 : Poignet (Axe Y) -->
+  <joint name="joint4" type="revolute">
+    <parent link="link3"/>
+    <child link="link4"/>
+    <origin xyz="0 0 0.3" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.5708" upper="1.5708" effort="10.0" velocity="1.0"/>
+  </joint>
+
+  <!-- ================= LINK 4 (Support Pince) ================= -->
+  <link name="link4">
+    <visual>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.1" radius="0.03"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+  </link>
+
+  <!-- Connexion rigide vers la base de la pince -->
+  <joint name="gripper_base_joint" type="fixed">
+    <parent link="link4"/>
+    <child link="gripper_base"/>
+    <origin xyz="0 0 0.1" rpy="0 0 0"/>
+  </joint>
+
+  <link name="gripper_base">
+    <visual>
+      <geometry>
+        <box size="0.02 0.12 0.02"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+  </link>
+
+  <!-- ================= PINCE (GRIPPER) ================= -->
+
+  <!-- Doigt Gauche -->
+  <joint name="left_finger_joint" type="prismatic">
+    <parent link="gripper_base"/>
+    <child link="left_finger"/>
+    <origin xyz="0 0.04 0.01" rpy="0 0 0"/>
+    <axis xyz="0 -1 0"/>
+    <limit lower="0.0" upper="0.035" effort="5.0" velocity="0.1"/>
+  </joint>
+
+  <link name="left_finger">
+    <visual>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.015 0.01 0.05"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <!-- Doigt Droit -->
+  <joint name="right_finger_joint" type="prismatic">
+    <parent link="gripper_base"/>
+    <child link="right_finger"/>
+    <origin xyz="0 -0.04 0.01" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="0.0" upper="0.035" effort="5.0" velocity="0.1"/>
+  </joint>
+
+  <link name="right_finger">
+    <visual>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.015 0.01 0.05"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+</robot>
+"""

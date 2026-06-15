@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<robot name="robot_impression_6axes">
+
+  <material name="gris_fonce"><color rgba="0.2 0.2 0.2 1"/></material>
+  <material name="gris_clair"><color rgba="0.7 0.7 0.7 1"/></material>
+  <material name="jaune"><color rgba="0.9 0.7 0.1 1"/></material>
+  <material name="rouge"><color rgba="0.8 0.1 0.1 1"/></material>
+
+  <link name="base_link">
+    <visual>
+      <geometry><cylinder length="0.1" radius="0.2"/></geometry>
+      <material name="gris_fonce"/>
+    </visual>
+  </link>
+
+  <joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="150" lower="-3.14" upper="3.14" velocity="1.5"/>
+  </joint>
+
+  <link name="link_1">
+    <visual>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <geometry><cylinder length="0.2" radius="0.1"/></geometry>
+      <material name="jaune"/>
+    </visual>
+  </link>
+
+  <joint name="joint_2" type="revolute">
+    <parent link="link_1"/>
+    <child link="link_2"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="150" lower="-1.57" upper="1.57" velocity="1.5"/>
+  </joint>
+
+  <link name="link_2">
+    <visual>
+      <origin xyz="0 0 0.25" rpy="0 0 0"/>
+      <geometry><box size="0.1 0.08 0.5"/></geometry>
+      <material name="gris_clair"/>
+    </visual>
+  </link>
+
+  <joint name="joint_3" type="revolute">
+    <parent link="link_2"/>
+    <child link="link_3"/>
+    <origin xyz="0 0 0.5" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="150" lower="-2.0" upper="2.0" velocity="1.5"/>
+  </joint>
+
+  <link name="link_3">
+    <visual>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <geometry><cylinder length="0.2" radius="0.08"/> </geometry>
+      <material name="jaune"/>
+    </visual>
+  </link>
+
+  <joint name="joint_4" type="revolute">
+    <parent link="link_3"/>
+    <child link="link_4"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" lower="-3.14" upper="3.14" velocity="2.0"/>
+  </joint>
+
+  <link name="link_4">
+    <visual>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <geometry><box size="0.06 0.06 0.4"/></geometry>
+      <material name="gris_clair"/>
+    </visual>
+  </link>
+
+  <joint name="joint_5" type="revolute">
+    <parent link="link_4"/>
+    <child link="link_5"/>
+    <origin xyz="0 0 0.4" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" lower="-1.8" upper="1.8" velocity="2.0"/>
+  </joint>
+
+  <link name="link_5">
+    <visual>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry><cylinder length="0.1" radius="0.05"/></geometry>
+      <material name="jaune"/>
+    </visual>
+  </link>
+
+  <joint name="joint_6" type="revolute">
+    <parent link="link_5"/>
+    <child link="buse_impression"/>
+    <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="50" lower="-3.14" upper="3.14" velocity="2.5"/>
+  </joint>
+
+  <link name="buse_impression">
+    <visual>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry><cylinder length="0.1" radius="0.015"/></geometry>
+      <material name="rouge"/>
+    </visual>
+  </link>
+
+</robot>
