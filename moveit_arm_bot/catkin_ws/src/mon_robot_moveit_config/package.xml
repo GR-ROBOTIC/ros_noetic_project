@@ -5,8 +5,8 @@
   <description>
      An automatically generated package with all the configuration and launch files for using the robot_4axes with the MoveIt Motion Planning Framework
   </description>
-  <author email="kebeelhadji271098@gmail.com">kebe</author>
-  <maintainer email="kebeelhadji271098@gmail.com">kebe</maintainer>
+  <author email="galsenerobotic@gmail.com">kebe</author>
+  <maintainer email="galsenerobotic@gmail.com">kebe</maintainer>
 
   <license>BSD</license>
 

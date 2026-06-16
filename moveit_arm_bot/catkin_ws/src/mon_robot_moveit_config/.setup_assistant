@@ -7,5 +7,5 @@ moveit_setup_assistant_config:
     relative_path: config/robot_4axes.srdf
   CONFIG:
     author_name: kebe
-    author_email: kebeelhadji271098@gmail.com
-    generated_timestamp: 1781636922
+    author_email: galsenerobotic@gmail.com
+    generated_timestamp: 1781645492

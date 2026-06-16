@@ -13,9 +13,19 @@ joint_limits:
     max_velocity: 1
     has_acceleration_limits: false
     max_acceleration: 0
-  gripper_joint:
+  finger_joint:
     has_velocity_limits: true
-    max_velocity: 0.5
+    max_velocity: 0.1
+    has_acceleration_limits: false
+    max_acceleration: 0
+  joint_5:
+    has_velocity_limits: true
+    max_velocity: 1.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  joint_6:
+    has_velocity_limits: true
+    max_velocity: 1.5
     has_acceleration_limits: false
     max_acceleration: 0
   shoulder_joint:

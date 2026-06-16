@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/devel/setup.sh

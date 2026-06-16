@@ -14,6 +14,8 @@
         <joint name="shoulder_joint"/>
         <joint name="elbow_joint"/>
         <joint name="wrist_joint"/>
-        <joint name="gripper_joint"/>
+        <joint name="joint_5"/>
+        <joint name="joint_6"/>
+        <joint name="finger_joint"/>
     </group>
 </robot>

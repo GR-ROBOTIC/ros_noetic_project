@@ -6,7 +6,9 @@ controller_list:
       - shoulder_joint
       - elbow_joint
       - wrist_joint
-      - gripper_joint
+      - joint_5
+      - joint_6
+      - finger_joint
 initial:  # Define initial robot poses per group
 #  - group: arm
 #    pose: home
