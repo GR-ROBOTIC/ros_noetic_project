@@ -1,0 +1,8 @@
+prefix=/home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/install
+
+Name: mon_robot_moveit_config
+Description: Description of mon_robot_moveit_config
+Version: 0.3.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

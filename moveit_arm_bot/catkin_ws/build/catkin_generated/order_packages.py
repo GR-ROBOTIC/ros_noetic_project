@@ -2,4 +2,4 @@
 source_root_dir = '/home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/src'
 whitelisted_packages = ''.split(';') if '' != '' else []
 blacklisted_packages = ''.split(';') if '' != '' else []
-underlay_workspaces = '/opt/ros/noetic'.split(';') if '/opt/ros/noetic' != '' else []
+underlay_workspaces = '/home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/devel;/opt/ros/noetic'.split(';') if '/home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/devel;/opt/ros/noetic' != '' else []

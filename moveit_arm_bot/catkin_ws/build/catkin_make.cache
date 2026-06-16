@@ -1,2 +1,2 @@
-mon_robot_moveit
+mon_robot_moveit:mon_robot_moveit_config
 -DCATKIN_DEVEL_PREFIX=/home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/install -G Unix Makefiles

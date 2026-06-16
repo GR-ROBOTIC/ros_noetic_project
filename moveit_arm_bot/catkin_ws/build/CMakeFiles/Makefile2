@@ -54,12 +54,14 @@ CMAKE_BINARY_DIR = /home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_w
 
 # The main recursive "all" target.
 all: gtest/all
+all: mon_robot_moveit_config/all
 all: mon_robot_moveit/all
 
 .PHONY : all
 
 # The main recursive "preinstall" target.
 preinstall: gtest/preinstall
+preinstall: mon_robot_moveit_config/preinstall
 preinstall: mon_robot_moveit/preinstall
 
 .PHONY : preinstall
@@ -71,6 +73,7 @@ clean: CMakeFiles/clean_test_results.dir/clean
 clean: CMakeFiles/tests.dir/clean
 clean: CMakeFiles/download_extra_data.dir/clean
 clean: gtest/clean
+clean: mon_robot_moveit_config/clean
 clean: mon_robot_moveit/clean
 
 .PHONY : clean
@@ -165,7 +168,6 @@ mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/tf2_msgs_generate_messages_l
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/dynamic_reconfigure_generate_messages_lisp.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_py.dir/clean
-mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/tf_generate_messages_eus.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/dynamic_reconfigure_generate_messages_py.dir/clean
@@ -192,7 +194,6 @@ mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messag
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/moveit_ros_manipulation_gencfg.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/shape_msgs_generate_messages_cpp.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/roscpp_generate_messages_lisp.dir/clean
-mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/shape_msgs_generate_messages_eus.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/clean
@@ -235,8 +236,27 @@ mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/trajectory_msgs_generate_mes
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/object_recognition_msgs_generate_messages_eus.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/object_recognition_msgs_generate_messages_nodejs.dir/clean
 mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_cpp.dir/clean
+mon_robot_moveit/clean: mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/clean
 
 .PHONY : mon_robot_moveit/clean
+
+#=============================================================================
+# Directory level rules for directory mon_robot_moveit_config
+
+# Recursive "all" directory target.
+mon_robot_moveit_config/all:
+
+.PHONY : mon_robot_moveit_config/all
+
+# Recursive "preinstall" directory target.
+mon_robot_moveit_config/preinstall:
+
+.PHONY : mon_robot_moveit_config/preinstall
+
+# Recursive "clean" directory target.
+mon_robot_moveit_config/clean: mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/clean
+
+.PHONY : mon_robot_moveit_config/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/doxygen.dir
@@ -481,6 +501,33 @@ gtest: gtest/googletest/CMakeFiles/gtest.dir/rule
 gtest/googletest/CMakeFiles/gtest.dir/clean:
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/clean
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/clean
+
+#=============================================================================
+# Target rules for target mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir
+
+# All Build rule for target.
+mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/all:
+	$(MAKE) -f mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/build.make mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/depend
+	$(MAKE) -f mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/build.make mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles --progress-num= "Built target _catkin_empty_exported_target"
+.PHONY : mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/all
+
+# Build rule for subdir invocation for target.
+mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles 0
+.PHONY : mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+# Convenience name for target.
+_catkin_empty_exported_target: mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+.PHONY : _catkin_empty_exported_target
+
+# clean rule for target.
+mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/clean:
+	$(MAKE) -f mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/build.make mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/clean
+.PHONY : mon_robot_moveit_config/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 #=============================================================================
 # Target rules for target mon_robot_moveit/CMakeFiles/std_srvs_generate_messages_nodejs.dir
@@ -994,33 +1041,6 @@ octomap_msgs_generate_messages_py: mon_robot_moveit/CMakeFiles/octomap_msgs_gene
 mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_py.dir/clean:
 	$(MAKE) -f mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_py.dir/build.make mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_py.dir/clean
 .PHONY : mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_py.dir/clean
-
-#=============================================================================
-# Target rules for target mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir
-
-# All Build rule for target.
-mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/all:
-	$(MAKE) -f mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build.make mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/depend
-	$(MAKE) -f mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build.make mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles --progress-num= "Built target octomap_msgs_generate_messages_nodejs"
-.PHONY : mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/all
-
-# Build rule for subdir invocation for target.
-mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles 0
-.PHONY : mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-octomap_msgs_generate_messages_nodejs: mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : octomap_msgs_generate_messages_nodejs
-
-# clean rule for target.
-mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/clean:
-	$(MAKE) -f mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build.make mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/clean
-.PHONY : mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/clean
 
 #=============================================================================
 # Target rules for target mon_robot_moveit/CMakeFiles/tf_generate_messages_eus.dir
@@ -1723,33 +1743,6 @@ roscpp_generate_messages_lisp: mon_robot_moveit/CMakeFiles/roscpp_generate_messa
 mon_robot_moveit/CMakeFiles/roscpp_generate_messages_lisp.dir/clean:
 	$(MAKE) -f mon_robot_moveit/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make mon_robot_moveit/CMakeFiles/roscpp_generate_messages_lisp.dir/clean
 .PHONY : mon_robot_moveit/CMakeFiles/roscpp_generate_messages_lisp.dir/clean
-
-#=============================================================================
-# Target rules for target mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir
-
-# All Build rule for target.
-mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/all:
-	$(MAKE) -f mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build.make mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/depend
-	$(MAKE) -f mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build.make mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles --progress-num= "Built target _catkin_empty_exported_target"
-.PHONY : mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/all
-
-# Build rule for subdir invocation for target.
-mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles 0
-.PHONY : mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-# Convenience name for target.
-_catkin_empty_exported_target: mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-.PHONY : _catkin_empty_exported_target
-
-# clean rule for target.
-mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean:
-	$(MAKE) -f mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build.make mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean
-.PHONY : mon_robot_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 #=============================================================================
 # Target rules for target mon_robot_moveit/CMakeFiles/shape_msgs_generate_messages_eus.dir
@@ -2884,6 +2877,33 @@ octomap_msgs_generate_messages_cpp: mon_robot_moveit/CMakeFiles/octomap_msgs_gen
 mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_cpp.dir/clean:
 	$(MAKE) -f mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_cpp.dir/build.make mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_cpp.dir/clean
 .PHONY : mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_cpp.dir/clean
+
+#=============================================================================
+# Target rules for target mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir
+
+# All Build rule for target.
+mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/all:
+	$(MAKE) -f mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build.make mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/depend
+	$(MAKE) -f mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build.make mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles --progress-num= "Built target octomap_msgs_generate_messages_nodejs"
+.PHONY : mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/all
+
+# Build rule for subdir invocation for target.
+mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/didi/Desktop/ROS_noetic_project/moveit_arm_bot/catkin_ws/build/CMakeFiles 0
+.PHONY : mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+octomap_msgs_generate_messages_nodejs: mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule
+
+.PHONY : octomap_msgs_generate_messages_nodejs
+
+# clean rule for target.
+mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/clean:
+	$(MAKE) -f mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build.make mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/clean
+.PHONY : mon_robot_moveit/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

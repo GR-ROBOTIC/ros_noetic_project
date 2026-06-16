@@ -1,0 +1,14 @@
+controller_list:
+  - name: fake_teste_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - waist_joint
+      - shoulder_joint
+      - elbow_joint
+      - wrist_joint
+      - gripper_joint
+initial:  # Define initial robot poses per group
+#  - group: teste
+#    pose: home
+
+  []
