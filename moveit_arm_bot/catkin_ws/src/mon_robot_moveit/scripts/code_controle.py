@@ -50,13 +50,20 @@ def main():
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('moveit_rviz_to_esp32_bridge_6axes', anonymous=True)
     
+    arm = moveit_commander.MoveGroupCommander("arm")
+    
+    # --- AJUSTEMENT DE LA VITESSE ICI ---
+    # 1.0 = Vitesse et accélération maximales (Met 0.5 si tu veux aller à 50%)
+    arm.set_max_velocity_scaling_factor(1.0)
+    arm.set_max_acceleration_scaling_factor(1.0)
+    # -------------------------------------
+
     rospy.loginfo("=====================================================")
-    rospy.loginfo("  PONT CONFIGURÉ POUR 6 AXES")
+    rospy.loginfo("  PONT CONFIGURÉ POUR 6 AXES (VITESSE MAX)")
     rospy.loginfo("  Cliquez sur 'Execute' dans RViz pour envoyer !")
     rospy.loginfo("=====================================================")
     
     rospy.Subscriber("/joint_states", JointState, callback_joints)
     rospy.spin()
-
 if __name__ == '__main__':
     main()
