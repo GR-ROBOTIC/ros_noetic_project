@@ -78,7 +78,7 @@ def main():
     
     # --- INITIALISATION PYGAME ---
     pygame.init()
-    pygame.display.set_caption("🎛️ Robot Arm - Slider Control Studio")
+    pygame.display.set_caption("Robot Arm - Slider Control Studio")
     screen = pygame.display.set_mode((750, 480))
     clock = pygame.time.Clock()
     font = pygame.font.SysFont("Helvetica", 18, bold=True)

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="robot_4axes">
+
+  <material name="blue"><color rgba="0.0 0.0 0.8 1.0"/></material>
+  <material name="white"><color rgba="1.0 1.0 1.0 1.0"/></material>
+  <material name="grey"><color rgba="0.3 0.3 0.3 1.0"/></material>
+  <material name="red"><color rgba="0.8 0.0 0.0 1.0"/></material>
+
+
+
+
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+      <mesh filename="../meshes/ok.stl" scale="1.0"/>
+      </geometry>
+        <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <material name="grey"/>
+    </visual>
+  </link>
+
+
+
+
+
+</robot>
